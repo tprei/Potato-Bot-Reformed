@@ -8,16 +8,6 @@ from discord import File, Member
 from datetime import datetime
 from utils import config as cfg
 
-async def asyncRange(start, stop=None, step=1):
-    if stop:
-        range_ = range(start, stop, step)
-    else:
-        range_ = range(start)
-
-    for i in range_:
-        yield i
-        await asyncio.sleep(0)
-
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -27,7 +17,7 @@ class Fun(commands.Cog):
         """Make a request to InspiroBot"""
         SUCESS = 200
         async with aiohttp.ClientSession() as session:
-            async for _ in asyncRange(numImages):
+            for _ in range(numImages):
                 async with session.get(url) as resp:
                     if resp.status != SUCESS:
                         await ctx.send('Could not generate image...')
@@ -44,7 +34,7 @@ class Fun(commands.Cog):
             await ctx.send('OOOOOOOOOOUUOOUOU PAROU PAROU TA MUITO GRANDE ESSE NUMERO AI AMIGAO')
             return
 
-        await self.randomImg(ctx, cfg.URL['INSPIRO'], numImages)
+        await self.randomImg(ctx, cfg.URLs['INSPIRO'], numImages)
 
     @commands.command()
     async def ping(self, ctx):
