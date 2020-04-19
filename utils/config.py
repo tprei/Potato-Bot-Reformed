@@ -21,4 +21,4 @@ ANNOY = [
 
 # Variables
 COMMANDS_PREFIX = '>'
-MAX_BORALOL = 7
+MAX_BORALOL = 10

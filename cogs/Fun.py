@@ -52,6 +52,7 @@ class Fun(commands.Cog):
 
         if k > cfg.MAX_BORALOL:
             await ctx.send(f'Ai o spam ta muito grande né manito, quer spammar assim vai pro caralho')
+            return
 
         for member in members:
             for _ in range(k):
