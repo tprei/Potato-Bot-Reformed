@@ -14,7 +14,8 @@ class PotatoBot(commands.Bot):
 
         # See ~/cogs/ for more info
         self.loaded_cogs = [
-                'cogs.Events'
+                'cogs.Events',
+                'cogs.Fun'
         ]
 
         self.start_time = datetime.utcnow()
@@ -23,10 +24,10 @@ class PotatoBot(commands.Bot):
 
     def startup(self):
         for cog in self.loaded_cogs:
-            try:
-                self.load_extension(cog)
-            except Exception:
-                print(f'Failed to load {cog}')
+           # try:
+            self.load_extension(cog)
+           # except Exception:
+           #     print(f'Failed to load {cog}')
 
 def parseOptions():
     verbosity = int(sys.argv[1])
