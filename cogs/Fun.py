@@ -5,6 +5,8 @@ import io
 from discord.ext import commands
 from discord import File
 
+from datetime import datetime
+
 INSPIRO_URL = 'https://inspirobot.me/api?generate=true'
 
 async def asyncRange(start, stop=None, step=1):
@@ -34,13 +36,25 @@ class Fun(commands.Cog):
                         data = io.BytesIO(await img.read())
                         await ctx.send(file=File(data, 'img.png'))
 
-    @commands.command(aliases=['motivar'])
-    async def motivate(self, ctx, numImages=1):
+    @commands.command()
+    async def motivar(self, ctx, numImages=1):
         if numImages > 3:
             await ctx.send('OOOOOOOOOOUUOOUOU PAROU PAROU TA MUITO GRANDE ESSE NUMERO AI AMIGAO')
             return
 
         await self.randomImg(ctx, INSPIRO_URL, numImages)
+
+    @commands.command()
+    async def ping(self, ctx):
+        messages = await ctx.channel.history(limit=1).flatten()
+
+        lastMsg = messages[0].created_at
+        now = datetime.utcnow()
+
+        await ctx.send(f'Pong! {(now-lastMsg).total_seconds() * 1000.0} ms')
+
+    @commands.command()
+    async def boralol(ctx,
 
 def setup(bot):
     bot.add_cog(Fun(bot))
