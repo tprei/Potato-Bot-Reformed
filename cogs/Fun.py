@@ -54,10 +54,10 @@ class Fun(commands.Cog):
             await ctx.send(f'Ai o spam ta muito grande né manito, quer spammar assim vai pro caralho')
             return
 
+        await ctx.send(f'To chamando os fera pro lolzin')
         for member in members:
             for _ in range(k):
                 await member.send(f'Ou {member} bora lol pls')
-                await ctx.send(f'{member} foi chamado pro Lolzinho com sucesso')
 
 def setup(bot):
     bot.add_cog(Fun(bot))
