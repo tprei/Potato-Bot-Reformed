@@ -29,16 +29,21 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def motivar(self, ctx, numImages=1):
-        """Sends a motivational picture"""
+        """Manda uma imagem motivacional para aquecer vossos corações"""
         if numImages > 3:
             await ctx.send('Po esse numero aí ta muito grande.')
             return
 
         await self.randomImg(ctx, cfg.URLs['INSPIRO'], numImages)
 
+    @motivar.error
+    async def motivarError(self, ctx, error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send('Comando deve ser no formato `>motivar k` onde k é um número inteiro.')
+
     @commands.command()
     async def ping(self, ctx):
-        """Pings the bot server"""
+        """Pinga o bot pra saber se ele ta vivásso"""
         messages = await ctx.channel.history(limit=1).flatten()
 
         lastMsg = messages[0].created_at
@@ -58,6 +63,11 @@ class Fun(commands.Cog):
         for member in members:
             for _ in range(k):
                 await member.send(f'Ou {member} bora lol pls')
+
+    @boralol.error
+    async def boralolError(self, ctx, error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send('Um dos usuários informados não existe. =(')
 
 def setup(bot):
     bot.add_cog(Fun(bot))
