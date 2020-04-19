@@ -4,13 +4,14 @@ from discord.ext import commands
 import logging
 
 import os, sys
+from utils import config as cfg
 
 LOG_VERBOSITY = 0
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 class PotatoBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix='>')
+        super().__init__(command_prefix=cfg.COMMANDS_PREFIX)
 
         # See ~/cogs/ for more info
         self.loaded_cogs = [
@@ -26,6 +27,7 @@ class PotatoBot(commands.Bot):
         for cog in self.loaded_cogs:
            # try:
             self.load_extension(cog)
+            print(f'Loaded cog {cog}')
            # except Exception:
            #     print(f'Failed to load {cog}')
 
