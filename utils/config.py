@@ -21,4 +21,5 @@ ANNOY = [
 
 # Variables
 COMMANDS_PREFIX = '>'
-MAX_BORALOL = 10
+MSG_BORALOL = "Ou bora um lol ae na moralzinha"
+MAX_BORALOL = 5
