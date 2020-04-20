@@ -4,14 +4,14 @@ from discord.ext import commands
 import logging
 
 import os, sys
-from utils import config as cfg
+from utils.config import GLOBAL as cfg
 
 LOG_VERBOSITY = 0
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 class PotatoBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=cfg.COMMANDS_PREFIX)
+        super().__init__(command_prefix=cfg['COMMANDS_PREFIX'])
 
         # See ~/cogs/ for more info
         self.loaded_cogs = [

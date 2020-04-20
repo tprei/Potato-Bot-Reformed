@@ -6,7 +6,7 @@ from discord.ext import commands, tasks
 from discord import File, Member
 
 from datetime import datetime
-from utils import config as cfg
+from utils.config import GLOBAL as cfg
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -30,15 +30,16 @@ class Fun(commands.Cog):
     async def motivar(self, ctx, num_images=1):
         """Manda uma imagem motivacional para aquecer vossos corações"""
         if num_images > 3:
-            await ctx.send('Po esse numero aí ta muito grande.')
-            return
+            raise commands.BadArgument
 
-        await self.random_img(ctx, cfg.URLs['INSPIRO'], num_images)
+        await self.random_img(ctx, cfg['URLs']['INSPIRO'], num_images)
 
     @motivar.error
     async def motivar_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send('Comando deve ser no formato `>motivar k` onde k é um número inteiro.')
+            await ctx.send('Comando deve ser no formato `>motivar k` onde k < 4')
+        else:
+            print(error)
 
     @commands.command()
     async def ping(self, ctx):
@@ -51,18 +52,19 @@ class Fun(commands.Cog):
         await ctx.send(f'Pong! {(now-lastMsg).total_seconds() * 1000.0} ms')
 
     @commands.command()
-    async def boralol(self, ctx, members: commands.Greedy[Member], *, message=cfg.MSG_BORALOL):
-        """Vem pra flex manito"""
+    async def boralol(self, ctx, members: commands.Greedy[Member], *, message=cfg['MSG_BORALOL']):
+        """Spamma o amiguinho pra chamar a atençao dele"""
 
-        await ctx.send(f'To chamando os fera')
         for member in members:
-            for _ in range(cfg.MAX_BORALOL):
+            for _ in range(cfg['MAX_BORALOL']):
                 await member.send(message)
 
     @boralol.error
     async def boralol_error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send('Um dos usuários informados não existe. =(')
+        else:
+            print(error)
 
 def setup(bot):
     bot.add_cog(Fun(bot))

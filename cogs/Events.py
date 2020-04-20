@@ -1,4 +1,5 @@
 from discord.ext import commands
+from utils.config import GLOBAL as cfg
 
 class Events(commands.Cog):
     def __init__(self, bot):
@@ -22,6 +23,10 @@ class Events(commands.Cog):
             return
 
         print(f'x [DELETED] {message.author}: {message.content}')
+
+    @commands.Cog.listener()
+    async def on_command_completion(self, ctx):
+        await ctx.message.add_reaction(cfg['COMMANDS_SUCCESS'])
 
 def setup(bot):
     bot.add_cog(Events(bot))
