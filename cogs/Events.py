@@ -7,8 +7,18 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Starting bot =)\n===========================\n')
-        print(f'Logged in as --> {self.bot.user}')
+
+        print("\n")
+
+        print(" ▄▄▄·     ▄▄▄▄▄ ▄▄▄·▄▄▄▄▄          ▄▄▄▄·      ▄▄▄▄▄")
+        print("▐█ ▄█▪    •██  ▐█ ▀█•██  ▪         ▐█ ▀█▪▪    •██")
+        print(" ██▀· ▄█▀▄ ▐█.▪▄█▀▀█ ▐█.▪ ▄█▀▄     ▐█▀▀█▄ ▄█▀▄ ▐█.▪")
+        print("▐█▪·•▐█▌.▐▌▐█▌·▐█ ▪▐▌▐█▌·▐█▌.▐▌    ██▄▪▐█▐█▌.▐▌▐█▌·")
+        print(".▀    ▀█▄▀▪▀▀▀  ▀  ▀ ▀▀▀  ▀█▄▀▪    ·▀▀▀▀  ▀█▄▀▪▀▀▀")
+
+        print("\n")
+
+        print(f'Logged in as {self.bot.user}')
 
     @commands.Cog.listener()
     async def on_message(self, message):
