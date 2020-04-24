@@ -5,6 +5,10 @@ __pycache__/
 *.py.swp
 *.swp
 
+# Todo
+
+TODO.md
+
 # C extensions
 *.so
 
