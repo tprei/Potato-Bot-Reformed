@@ -18,8 +18,11 @@ class Gold(commands.Cog):
     async def gold(self, ctx):
         """Gets random golded message"""
         pass
+        gold_channel = await get_gold_channel()
+        
 
     @gold.command(aliases=['set'])
+    @commands.is_owner()
     async def emoji(self, ctx, emoji):
         """Setup your golded message emoji!"""
         add_global('DEFAULT_GOLD_EMOJI', emoji)

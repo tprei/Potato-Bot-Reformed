@@ -18,7 +18,8 @@ class PotatoBot(commands.Bot):
                 'cogs.Events',
                 'cogs.Fun',
                 'cogs.Admin',
-                'cogs.Gold'
+                'cogs.Gold',
+                'cogs.Config'
         ]
 
         self.start_time = datetime.utcnow()

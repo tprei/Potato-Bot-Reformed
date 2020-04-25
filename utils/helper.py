@@ -1,4 +1,5 @@
 from utils.config import GLOBAL as cfg
+from discord.ext import commands
 
 def make_message(emoji, count, channel):
     return f'{emoji} **{count}** in {channel.mention}'
@@ -20,3 +21,8 @@ async def edit_gold_message(message, reaction):
     new_content = make_message(emoji, count, from_channel) 
 
     await message.edit(content=new_content)
+
+def is_owner():
+    async def condition(ctx):
+        return ctx.author.id == cfg['OWNER']
+    return commands.check(condition)

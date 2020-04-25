@@ -44,7 +44,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         message = reaction.message
-        if str(reaction) == cfg['DEFAULT_GOLD_EMOJI'] and reaction.count >= cfg['DEFAULT_GOLD_LIMIT']:
+        if str(reaction) == cfg['DEFAULT_GOLD_EMOJI'] and reaction.count >= cfg['DEFAULT_GOLD_LIMIT'] and message.channel.id != cfg['DEFAULT_GOLD_CHANNEL']:
             # Create the embed
             embed = GoldEmbed(reaction.message)
 
