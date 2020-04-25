@@ -15,12 +15,14 @@ class Config(commands.Cog):
         await ctx.send(f'```json\n{pretty_json}\n```')
 
     @config.command(aliases=['edit'])
+    @commands.is_owner()
     async def set(self, ctx, key: str, value: str, is_int=0):
         if is_int:
             value = int(value)
         add_global(key, value)
 
     @config.command(aliases=['erase', 'remove'])
+    @commands.is_owner()
     async def rmv(self, ctx, key: str):
         remove_global(key)
 

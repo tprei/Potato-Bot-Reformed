@@ -8,7 +8,7 @@
 ## Medium
 **DONE** - config.py as a JSON loader so that global variables can be configured
 **DONE** - Admin Class (clear, clearcm)
-- Cog that supports live configuration changing by the owner, plus pretty printing each global variable
+**DONE** - Cog that supports live configuration changing by the owner, plus pretty printing each global variable
 
 ## Hard
 - "gold stats" will get stats for the users with the most golded messages
