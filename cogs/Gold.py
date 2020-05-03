@@ -15,7 +15,7 @@ class Gold(commands.Cog):
     async def get_random_gold(self):
         pass
 
-    async def get_gold_channel(self, ctx):
+    async def get_gold_channel(self):
         return await self.bot.fetch_channel(cfg['DEFAULT_GOLD_CHANNEL'])
 
     @commands.group()
