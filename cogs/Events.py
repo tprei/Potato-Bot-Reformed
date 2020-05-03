@@ -53,7 +53,7 @@ class Events(commands.Cog):
             try:
                 gold_channel = await gold_cog.get_gold_channel()
             except Exception as e:
-                #await message.channel.send('Gold channel must be configured')
+                await message.channel.send('Gold channel must be configured')
                 print(e)
                 return
 
