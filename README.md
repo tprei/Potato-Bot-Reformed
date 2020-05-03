@@ -24,7 +24,7 @@ You can install them with pip:
 
 Now you have to setup the enviroment variable for the bot auth token.
 
-In Linux and MacOS that will could be (if you use .bashrc for your shell configs):
+In Linux and MacOS that will be (if you use .bashrc for your shell configs):
 
 `echo export DISCORD_TOKEN=<your_token_here> >> .bashrc`
 
