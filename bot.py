@@ -53,7 +53,11 @@ def main():
     parseOptions()
 
     bot = PotatoBot()
-    bot.run(TOKEN)
+
+    try:
+        bot.run(TOKEN)
+    except Exception as e:
+        print('To run this bot you must set environment variable DISCORD_TOKEN to your Bot\'s token.')
 
 if __name__ == '__main__':
     main()
