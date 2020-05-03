@@ -49,7 +49,12 @@ class Events(commands.Cog):
             embed = GoldEmbed(reaction.message)
 
             gold_cog = self.bot.get_cog('Gold')
-            gold_channel = await gold_cog.get_gold_channel()
+            
+            try:
+                gold_channel = await gold_cog.get_gold_channel()
+            except Exception as e:
+                await message.channel.send('Gold channel must be configured')
+                return
 
             if message.id in self.bot.gold_ids:
                 embed_id = self.bot.gold_ids[message.id]

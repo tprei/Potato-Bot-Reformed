@@ -4,6 +4,10 @@ from utils.config import GLOBAL as cfg, add_global
 
 # Known bug: Doesn't support multiple embeds
 
+class GoldChannelNotFound(Exception):
+    """Raised when Gold channel is unspecified in utils/config.json"""
+    pass
+
 class Gold(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -11,7 +15,7 @@ class Gold(commands.Cog):
     async def get_random_gold(self):
         pass
 
-    async def get_gold_channel(self):
+    async def get_gold_channel(self, ctx):
         return await self.bot.fetch_channel(cfg['DEFAULT_GOLD_CHANNEL'])
 
     @commands.group()
