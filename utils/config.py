@@ -12,7 +12,7 @@ def load(file_name):
 
 def export(dictionary, file_name):
     if len(dictionary) == 0:
-        raise EmptyFileError('GLOBAL dictionary is empty, are you doing the right thing?')
+        raise EmptyFileError('dictionary is empty, are you doing the right thing?')
     
     with open(file_name, 'w') as json_data:
         json.dump(dictionary, json_data)
@@ -26,3 +26,4 @@ def remove_global(p, file_name='utils/config.json'):
     export(GLOBAL, file_name)
 
 GLOBAL = load('utils/config.json')
+EMOJI = load('utils/emoji.json')

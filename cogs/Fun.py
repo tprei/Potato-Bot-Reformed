@@ -6,7 +6,10 @@ from discord.ext import commands, tasks
 from discord import File, Member
 
 from datetime import datetime
-from utils.config import GLOBAL as cfg
+from utils.config import GLOBAL as cfg, EMOJI
+from utils.helper import remove_special_chars as fix_string
+
+import random
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -65,6 +68,37 @@ class Fun(commands.Cog):
             await ctx.send('Um dos usuários informados não existe. =(')
         else:
             print(error)
+
+    @commands.command()
+    async def zap(self, ctx):
+        """https://github.com/vmarchesin/vemdezapbe.be/blob/master/api/db/tokens.js"""
+        sentence = ctx.message.content.split()
+        new_sentence = ""
+
+        for word in sentence[1:]:
+            new_sentence += word + ' '
+            fixed = await fix_string(word)
+
+            rng = random.randint(1, 10)
+
+            if fixed in EMOJI['full_match']:
+                random_emoji = random.choice(EMOJI['full_match'][fixed])
+                random_qt = random.randint(1, 3)
+                new_sentence += random_qt * random_emoji + ' '
+                continue
+
+            # 80% of chance of adding an emoji
+            if rng <= 2:
+                continue
+
+            for prefix in EMOJI['partial_match']:
+                if fixed.startswith(prefix):
+                    random_emoji = random.choice(EMOJI['partial_match'][prefix])
+                    random_qt = random.randint(1, 3)
+                    new_sentence += random_qt * random_emoji + ' '
+                    break
+
+        await ctx.send(new_sentence)
 
 def setup(bot):
     bot.add_cog(Fun(bot))
