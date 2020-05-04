@@ -71,18 +71,28 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def zap(self, ctx):
-        """https://github.com/vmarchesin/vemdezapbe.be/blob/master/api/db/tokens.js"""
+        """Zapifica sua mensagem."""
         sentence = ctx.message.content.split()
         new_sentence = ""
 
+        """https://github.com/vmarchesin/vemdezapbe.be/blob/master/api/db/tokens.js"""
         for word in sentence[1:]:
             new_sentence += word + ' '
             fixed = await fix_string(word)
 
             rng = random.randint(1, 10)
 
-            if fixed in EMOJI['full_match']:
-                random_emoji = random.choice(EMOJI['full_match'][fixed])
+            if fixed in EMOJI['full_match'] or fixed in EMOJI['full_match_extra']:
+                extra_rng = random.randint(1, 10)
+
+                if fixed in EMOJI['full_match']:
+                    random_emoji = random.choice(EMOJI['full_match'][fixed])
+                # 60% odds
+                elif extra_rng >= 4:
+                    random_emoji = random.choice(EMOJI['full_match_extra'][fixed])
+                else:
+                    continue
+
                 random_qt = random.randint(1, 3)
                 new_sentence += random_qt * random_emoji + ' '
                 continue

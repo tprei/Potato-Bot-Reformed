@@ -58,6 +58,7 @@ def main():
         bot.run(TOKEN)
     except Exception as e:
         print('To run this bot you must set environment variable DISCORD_TOKEN to your Bot\'s token.')
+        print(e)
 
 if __name__ == '__main__':
     main()

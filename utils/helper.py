@@ -15,7 +15,7 @@ async def remove_special_chars(string):
 
     nfkd = unicodedata.normalize('NFKD', string)
     no_accents = u"".join([c for c in nfkd if not unicodedata.combining(c)])
-    return re.sub('[^a-zA-Z0-9 \\\]', '', no_accents)
+    return re.sub('[^a-zA-Z0-9 \\\]', '', no_accents).lower()
 
 async def send_gold_message(reaction, to_channel, gold_embed):
     emoji, count, from_channel = get_message_info(reaction)
