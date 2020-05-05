@@ -6,8 +6,10 @@ from discord.ext import commands, tasks
 from discord import File, Member
 
 from datetime import datetime
+
 from utils.config import GLOBAL as cfg, EMOJI
 from utils.helper import remove_special_chars as fix_string
+from utils.stopwords import stopwords
 
 import random
 
@@ -72,41 +74,62 @@ class Fun(commands.Cog):
     @commands.command()
     async def zap(self, ctx):
         """Zapifica sua mensagem."""
-        sentence = ctx.message.content.split()
+        rows = ctx.message.content.split('\n')
+
+        for i in range(len(rows)):
+            rows[i] = rows[i].split()
+
+        rows[0] = rows[0][1:]
+        
         new_sentence = ""
 
         """https://github.com/vmarchesin/vemdezapbe.be/blob/master/api/db/tokens.js"""
-        for word in sentence[1:]:
-            new_sentence += word + ' '
-            fixed = await fix_string(word)
+        for r in rows:
+            for word in r:
+                new_sentence += word + ' '
+                fixed = await fix_string(word)
 
-            rng = random.randint(1, 10)
-
-            if fixed in EMOJI['full_match'] or fixed in EMOJI['full_match_extra']:
-                extra_rng = random.randint(1, 10)
-
-                if fixed in EMOJI['full_match']:
-                    random_emoji = random.choice(EMOJI['full_match'][fixed])
-                # 60% odds
-                elif extra_rng >= 4:
-                    random_emoji = random.choice(EMOJI['full_match_extra'][fixed])
-                else:
+                if fixed in stopwords or len(fixed) < 2:
                     continue
 
-                random_qt = random.randint(1, 3)
-                new_sentence += random_qt * random_emoji + ' '
-                continue
+                rng = random.randint(1, 10)
 
-            # 80% of chance of adding an emoji
-            if rng <= 2:
-                continue
+                if fixed in EMOJI['full_match'] or fixed in EMOJI['full_match_extra']:
+                    extra_rng = random.randint(1, 10)
 
-            for prefix in EMOJI['partial_match']:
-                if fixed.startswith(prefix):
-                    random_emoji = random.choice(EMOJI['partial_match'][prefix])
+                    if fixed in EMOJI['full_match']:
+                        index_rng = random.randint(1, 10)
+                        # 10% of odds of not getting first emoji
+                        if index_rng < 2:
+                            random_emoji = random.choice(EMOJI['full_match'][fixed])
+                        else:
+                            random_emoji = EMOJI['full_match'][fixed][0]
+
+                    # 60% odds
+                    elif extra_rng >= 4:
+                        index_rng = random.randint(1, 10)
+                        if index_rng < 3:
+                            random_emoji = random.choice(EMOJI['full_match_extra'][fixed])
+                        else:
+                            random_emoji = EMOJI['full_match_extra'][fixed][0]
+                    else:
+                        continue
+
                     random_qt = random.randint(1, 3)
                     new_sentence += random_qt * random_emoji + ' '
-                    break
+                    continue
+
+                # 80% of chance of adding an emoji
+                if rng <= 2:
+                    continue
+
+                for prefix in EMOJI['partial_match']:
+                    if fixed.startswith(prefix):
+                        random_emoji = random.choice(EMOJI['partial_match'][prefix])
+                        random_qt = random.randint(1, 3)
+                        new_sentence += random_qt * random_emoji + ' '
+                        break
+            new_sentence += '\n'
 
         await ctx.send(new_sentence)
 
