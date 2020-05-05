@@ -39,6 +39,9 @@ Now to run the bot, you just have to do:
 - clear: Clears chat
 - clearcm: Clears chat's commands
 - motivar: Sends a funny motivational picture
+- zap: Puts emoji's in your message according to its words
+
+and more!
 
 ## What will I have to configure?
 
