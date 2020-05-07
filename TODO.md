@@ -10,6 +10,8 @@
 **DONE** - Admin Class (clear, clearcm)
 **DONE** - Cog that supports live configuration changing by the owner, plus pretty printing each global variable
 
+- Organize dirs
+
 ## Hard
 - "gold stats" will get stats for the users with the most golded messages
     - This needs a database for users, gold count (received and sent)
