@@ -17,13 +17,13 @@ def export(dictionary, file_name):
     with open(file_name, 'w') as json_data:
         json.dump(dictionary, json_data)
 
-def add_global(p, q, file_name='utils/config.json'):
+def add_global(p, q, file_name='utils/resources/config.json'):
     GLOBAL[p] = q
     export(GLOBAL, file_name)
 
-def remove_global(p, file_name='utils/config.json'):
+def remove_global(p, file_name='utils/resources/config.json'):
     GLOBAL.pop(p, None)
     export(GLOBAL, file_name)
 
-GLOBAL = load('utils/config.json')
-EMOJI = load('utils/emoji.json')
+GLOBAL = load('utils/resources/config.json')
+EMOJI = load('utils/resources/emoji.json')
