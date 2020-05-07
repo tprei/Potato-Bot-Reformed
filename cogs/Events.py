@@ -63,7 +63,13 @@ class Events(commands.Cog):
 
                 await edit_gold_message(emb_message, reaction)
             else:
-                sent_message = await send_gold_message(reaction, gold_channel, embed)
+                # for some reason you can't send multiple embeds in the TextChannel send coroutine
+                if len(message.embeds) == 1:
+                    embed = message.embeds[0]
+            
+                attachments = message.attachments
+                files = [await attach.to_file() for attach in attachments]
+                sent_message = await send_gold_message(reaction, gold_channel, embed, files)
 
                 self.bot.gold_ids[message.id] = sent_message.id
                 
