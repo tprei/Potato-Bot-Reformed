@@ -2,12 +2,6 @@ from discord.ext import commands
 
 from utils.config import GLOBAL as cfg, add_global
 
-# Known bug: Doesn't support multiple embeds
-
-class GoldChannelNotFound(Exception):
-    """Raised when Gold channel is unspecified in utils/config.json"""
-    pass
-
 class Gold(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

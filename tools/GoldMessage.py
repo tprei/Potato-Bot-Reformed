@@ -1,3 +1,5 @@
+from discord import Embed
+
 from utils.config import GLOBAL as cfg
 from tools.GoldEmbed import GoldEmbed
 
@@ -18,7 +20,11 @@ async def send_gold_message(reaction, to_channel, _embed, gold_files):
     else:
         user = None
 
-    message = await to_channel.send(make_message(emoji, count, from_channel, user), embed=_embed, files=gold_files)
+    if _embed != Embed.Empty:
+        message = await to_channel.send(make_message(emoji, count, from_channel, user), embed=_embed, files=gold_files)
+    else:
+        message = await to_channel.send(make_message(emoji, count, from_channel, user), files=gold_files)
+
     return message
 
 async def edit_gold_message(message, reaction):

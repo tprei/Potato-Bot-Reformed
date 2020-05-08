@@ -7,3 +7,17 @@ async def remove_special_chars(string):
     nfkd = unicodedata.normalize('NFKD', string)
     no_accents = u"".join([c for c in nfkd if not unicodedata.combining(c)])
     return re.sub('[^a-zA-Z0-9 \\\]', '', no_accents).lower()
+
+def isimage(name):
+    types = [
+        'jpg',
+        'jpeg',
+        'png',
+        'bmp',
+    ]
+
+    for t in types:
+        if name.endswith(t):
+            return True
+
+    return False
