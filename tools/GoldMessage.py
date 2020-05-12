@@ -31,7 +31,10 @@ async def edit_gold_message(message, reaction):
 
     emoji, count, from_channel = get_message_info(reaction)
 
-    _embed = message.embeds[0]
+    if len(message.embeds) > 0:
+        _embed = message.embeds[0]
+    else:
+        _embed = None
 
     if not isinstance(_embed, GoldEmbed):
         user = reaction.message.author.mention
