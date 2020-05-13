@@ -1,17 +1,16 @@
 from datetime import datetime
-
 from discord.ext import commands
-import logging
-
-import os, sys
 from utils.config import GLOBAL as cfg
+import asyncio
+import logging
+import os, sys
 
 LOG_VERBOSITY = 0
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 class PotatoBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=cfg['COMMANDS_PREFIX'])
+        super().__init__(command_prefix=cfg['COMMANDS_PREFIX'], case_insensitive=True)
 
         # See ~/cogs/ for more info
         self.loaded_cogs = [
@@ -20,7 +19,8 @@ class PotatoBot(commands.Bot):
                 'cogs.Admin',
                 'cogs.Gold',
                 'cogs.Config',
-                'cogs.GoldHandler'
+                'cogs.GoldHandler',
+                'cogs.Twitter'
         ]
 
         self.start_time = datetime.utcnow()
@@ -32,11 +32,8 @@ class PotatoBot(commands.Bot):
 
     def startup(self):
         for cog in self.loaded_cogs:
-            try:
-                self.load_extension(cog)
-                print(f'Loaded cog {cog}')
-            except Exception as e:
-                print(e)
+            self.load_extension(cog)
+            print(f'Loaded cog {cog}')
 
 def parseOptions():
     verbosity = int(sys.argv[1])

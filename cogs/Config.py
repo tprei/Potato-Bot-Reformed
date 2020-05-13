@@ -8,13 +8,13 @@ class Config(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, case_insensitive=True)
     @commands.is_owner()
     async def config(self, ctx):
         pretty_json = dumps(cfg, sort_keys=True, indent=4)
         await ctx.send(f'```json\n{pretty_json}\n```')
 
-    @config.command(aliases=['edit'])
+    @config.command(aliases=['edit', 'add'])
     @commands.is_owner()
     async def set(self, ctx, key: str, value: str, is_int=0):
         if is_int:

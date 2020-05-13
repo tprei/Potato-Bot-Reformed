@@ -12,7 +12,7 @@ class Gold(commands.Cog):
     async def get_gold_channel(self):
         return await self.bot.fetch_channel(cfg['DEFAULT_GOLD_CHANNEL'])
 
-    @commands.group()
+    @commands.group(case_insensitive=True)
     async def gold(self, ctx):
         """Gets random golded message"""
         pass

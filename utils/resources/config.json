@@ -1,1 +1,21 @@
-{"URLs": {"INSPIRO": "https://inspirobot.me/api?generate=true"}, "COMMANDS_PREFIX": ">", "COMMANDS_SUCCESS": "\u2705", "MSG_BORALOL": "Ou bora um lol ae na moralzinha", "MAX_BORALOL": 5, "DEFAULT_CLEAR": 10, "DEFAULT_GOLD_LIMIT": 1, "DEFAULT_GOLD_EMOJI": "\u2b50", "DEFAULT_GOLD_CHANNEL": 702263858613715074}
+{
+    "COMMANDS_PREFIX": ">",
+    "COMMANDS_SUCCESS": "\u2705",
+    "DEFAULT_CLEAR": 10,
+    "DEFAULT_GOLD_CHANNEL": 702263858613715074,
+    "DEFAULT_GOLD_EMOJI": "\u2b50",
+    "DEFAULT_GOLD_LIMIT": 1,
+    "DEFAULT_TWITTER_CHANNEL": 709868579599810675,
+    "FOLLOW": [
+        1237872793363992577,
+        1084690273454702592,
+        1229600006715453441,
+        1253081282625654787,
+        1174200449320333317
+    ],
+    "MAX_BORALOL": 5,
+    "MSG_BORALOL": "Ou bora um lol ae na moralzinha",
+    "URLs": {
+        "INSPIRO": "https://inspirobot.me/api?generate=true"
+    }
+}
