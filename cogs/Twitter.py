@@ -69,7 +69,7 @@ class Twitter(commands.Cog):
             return
 
         await self.add_user(user.id)
-        self.reset()
+        await self.reset()
 
     @twitter.command(aliases=['unfollow'])
     async def rmv(self, ctx, user):
