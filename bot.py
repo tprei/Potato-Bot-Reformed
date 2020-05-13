@@ -20,7 +20,8 @@ class PotatoBot(commands.Bot):
                 'cogs.Gold',
                 'cogs.Config',
                 'cogs.GoldHandler',
-                'cogs.Twitter'
+                'cogs.Twitter',
+                'cogs.Welcome'
         ]
 
         self.start_time = datetime.utcnow()
@@ -32,8 +33,8 @@ class PotatoBot(commands.Bot):
 
     def startup(self):
         for cog in self.loaded_cogs:
+            print(f'Loaded extension {cog}')
             self.load_extension(cog)
-            print(f'Loaded cog {cog}')
 
 def parseOptions():
     verbosity = int(sys.argv[1])

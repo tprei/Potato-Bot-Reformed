@@ -68,6 +68,7 @@ class Twitter(commands.Cog):
             print(e)
             return
 
+        print('User added to follow list | Resetting Twitter timeline')
         await self.add_user(user.id)
         await self.reset()
 
@@ -80,6 +81,7 @@ class Twitter(commands.Cog):
             print(e)
             return
 
+        print('User removed from follow list | Resetting Twitter timeline')
         await self.rmv_user(user.id)
         await self.reset()
 
@@ -89,10 +91,9 @@ class Twitter(commands.Cog):
             follow_list = list(map(str, cfg['FOLLOW']))
             self.stream = tweepy.Stream(auth=self.api.auth, listener=self.listener)
             
-            print('Resetting Twitter timeline')
             self.stream.filter(follow=follow_list, is_async=True)
         except Exception as e:
-            print('Stream never initialized')
+            print('Stream Error: Stream never initialized')
             print(e)
 
     @twitter.command(aliases=['reset'])
@@ -107,12 +108,13 @@ class Twitter(commands.Cog):
         channel_id = cfg['DEFAULT_TWITTER_CHANNEL']
         self.twitter_channel = self.bot.get_channel(channel_id)
 
-        self.listener = TwitterListener(self.twitter_channel, self.bot)
-
+        self.listener = TwitterListener(self)
+ 
+        print('Starting bot | Resetting Twitter timeline')
         await self.reset()
 
     @twitter.command(alises=['halt', 'kill'])
-    @commands.is_owner()
+    @commands.is_owner() 
     async def stop(self):
         await self.listener.stop()
 

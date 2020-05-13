@@ -1,18 +1,15 @@
 import asyncio
 import threading
 import tweepy
+import urllib3
 
 from utils.config import GLOBAL as cfg
 
-def fetch_twitter_channel():
-    return cfg['DEFAULT_TWITTER_CHANNEL']
-
 class TwitterListener(tweepy.StreamListener):
 
-    def __init__(self, channel, bot):
+    def __init__(self, cog):
         super().__init__()
-        self.twitter_channel = channel
-        self.bot = bot
+        self.twitter_cog = cog
 
     def from_creator(self, status):
         """https://github.com/tweepy/tweepy/issues/981#issuecomment-393817367"""
@@ -34,12 +31,21 @@ class TwitterListener(tweepy.StreamListener):
 
         url = f'https://www.twitter.com/{status.user.id}/status/{status.id_str}/'
 
-        self.bot.loop.create_task(self.twitter_channel.send(url))
+        bot = self.twitter_cog.bot
+        channel = bot.get_channel(cfg['DEFAULT_TWITTER_CHANNEL'])
+        
+        bot.loop.create_task(channel.send(url))
 
     def on_error(self, status):
         if status == 420:
-            print('Disconnecting from Twitter')
+            print('Twitter error | Disconnecting')
             return False
 
-    async def stop(self):
-        self.running = False
+    def on_exception(self, exception):
+        bot = self.twitter_cog.bot
+        if isinstance(exception, urllib3.exceptions.ReadTimeoutError):
+            print(f'Twitter stream timed out | Recreating stream...')
+        elif isinstance(exception, urllib.exceptions.ProtocolError):
+            print(f'Twitter stream read error | Recreating stream...')
+
+        bot.loop.create_task(self.twitter_cog.reset())
