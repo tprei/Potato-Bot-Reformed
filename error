@@ -1,0 +1,11 @@
+WARNING:discord.client:PyNaCl is not installed, voice will NOT be supported
+Traceback (most recent call last):
+  File "run.py", line 32, in <module>
+    call(['python3', 'bot.py', '0'])
+  File "/usr/lib/python3.6/subprocess.py", line 289, in call
+    return p.wait(timeout=timeout)
+  File "/usr/lib/python3.6/subprocess.py", line 1477, in wait
+    (pid, sts) = self._try_wait(0)
+  File "/usr/lib/python3.6/subprocess.py", line 1424, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+KeyboardInterrupt

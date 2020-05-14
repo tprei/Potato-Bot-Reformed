@@ -47,9 +47,10 @@ class TwitterListener(tweepy.StreamListener):
         bot = self.twitter_cog.bot
         if isinstance(exception, urllib3.exceptions.ReadTimeoutError):
             print(f'Twitter stream timed out | Recreating stream...')
+            bot.loop.create_task(self.twitter_cog.reset())
         elif isinstance(exception, urllib3.exceptions.ProtocolError):
             print(f'Twitter stream read error | Recreating stream...')
+            bot.loop.create_task(self.twitter_cog.reset())
         else:
             print(exception)
 
-        bot.loop.create_task(self.twitter_cog.reset())
