@@ -89,7 +89,8 @@ class Twitter(commands.Cog):
         '''Resets the tweepy stream object (in case any changes were made to filters'''
         try:
             follow_list = list(map(str, cfg['FOLLOW']))
-            self.stream = tweepy.Stream(auth=self.api.auth, listener=self.listener)
+            self.stream = None
+            self.stream = tweepy.Stream(auth=self.api.auth, listener=TwitterListener(self))
             
             self.stream.filter(follow=follow_list, is_async=True)
         except Exception as e:
@@ -101,22 +102,16 @@ class Twitter(commands.Cog):
     async def reset_command(self, ctx):
         await self.reset()
 
-
     async def start(self):
         await self.bot.wait_until_ready()
-
-        channel_id = cfg['DEFAULT_TWITTER_CHANNEL']
-        self.twitter_channel = self.bot.get_channel(channel_id)
-
-        self.listener = TwitterListener(self)
  
         print('Starting bot | Resetting Twitter timeline')
         await self.reset()
 
     @twitter.command(alises=['halt', 'kill'])
     @commands.is_owner() 
-    async def stop(self):
-        await self.listener.stop()
+    async def stop(self, ctx):
+        self.listener.running = False
 
 
 def setup(bot):
