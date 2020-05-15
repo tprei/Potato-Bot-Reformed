@@ -25,6 +25,7 @@ class PotatoBot(commands.Bot):
         ]
 
         self.start_time = datetime.utcnow()
+        self.cache = set()
 
         self.gold_channel = 0
         self.gold_ids = {}

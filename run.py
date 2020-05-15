@@ -11,7 +11,7 @@ def parse():
             help='Set logs to DEBUG mode',
             action='store_true'
     )
-
+    
     parser.add_argument(
             '-e',
             '--error',
