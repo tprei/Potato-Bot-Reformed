@@ -86,33 +86,31 @@ class Twitter(commands.Cog):
         await self.reset()
 
     async def reset(self):
+        await self.bot.wait_until_ready()
         '''Resets the tweepy stream object (in case any changes were made to filters'''
-        try:
-            follow_list = list(map(str, cfg['FOLLOW']))
-            self.stream = None
-            self.stream = tweepy.Stream(auth=self.api.auth, listener=TwitterListener(self))
-            
-            self.stream.filter(follow=follow_list, is_async=True)
-        except Exception as e:
-            print('Stream Error: Stream never initialized')
-            print(e)
+        follow_list = list(map(str, cfg['FOLLOW']))
+
+        self.stream.running = False
+        self.stream.filter(follow=follow_list, is_async=True, stall_warnings=True)
 
     @twitter.command(aliases=['reset'])
     @commands.is_owner()
     async def reset_command(self, ctx):
+        print('Command invoked | Resetting stream')
         await self.reset()
 
     async def start(self):
         await self.bot.wait_until_ready()
  
-        print('Starting bot | Resetting Twitter timeline')
-        await self.reset()
+        print('Starting bot | Starting Twitter timeline')
+        follow_list = list(map(str, cfg['FOLLOW']))
+        self.stream = tweepy.Stream(auth=self.api.auth, listener=TwitterListener(self))
+        self.stream.filter(follow=follow_list, is_async=True, stall_warnings=True)
 
     @twitter.command(alises=['halt', 'kill'])
     @commands.is_owner() 
     async def stop(self, ctx):
         self.listener.running = False
-
 
 def setup(bot):
     bot.add_cog(Twitter(bot))
