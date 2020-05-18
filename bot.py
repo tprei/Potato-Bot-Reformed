@@ -1,11 +1,11 @@
 from datetime import datetime
 from discord.ext import commands
+from tools.logger import initialize_logging
 from utils.config import GLOBAL as cfg
 import asyncio
 import logging
 import os, sys
 
-LOG_VERBOSITY = 0
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 class PotatoBot(commands.Bot):
@@ -36,26 +36,16 @@ class PotatoBot(commands.Bot):
         for cog in self.loaded_cogs:
             print(f'Loaded extension {cog}')
             self.load_extension(cog)
-
-def parseOptions():
-    verbosity = int(sys.argv[1])
-
-    LOG_VERBOSITY = verbosity
-
-    if LOG_VERBOSITY == 1:
-        logging.basicConfig(level=logging.DEBUG)
-    elif LOG_VERBOSITY == 2:
-        logging.basicConfig(level=logging.ERROR)
-    else:
-        logging.basicConfig(level=logging.WARNING)
-
 def main():
-    parseOptions()
-
     bot = PotatoBot()
+
+    path = os.getcwd()
+    initialize_logging(path)
 
     try:
         bot.run(TOKEN)
+    except KeyboardInterrupt:
+        print('Closing bot, bye! =)')
     except Exception as e:
         print('To run this bot you must set environment variable DISCORD_TOKEN to your Bot\'s token.')
         print(e)

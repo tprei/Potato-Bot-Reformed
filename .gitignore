@@ -5,6 +5,11 @@ __pycache__/
 tags
 *~
 
+# Logs
+logs/
+logs/*
+
+
 # Data
 utils/resources/config.json
 
@@ -14,6 +19,7 @@ utils/resources/config.json
 
 # Todo
 TODO.md
+TODO*
 
 # C extensions
 *.so

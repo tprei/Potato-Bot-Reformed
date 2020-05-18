@@ -1,3 +1,4 @@
+import os
 import re
 import unicodedata
 
@@ -21,3 +22,7 @@ def isimage(name):
             return True
 
     return False
+
+def create_folder(folder: str) -> None:
+    if not os.path.exists(folder):
+        os.makedirs(folder)
