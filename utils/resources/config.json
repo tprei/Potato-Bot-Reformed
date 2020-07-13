@@ -25,5 +25,8 @@
     "MSG_BORALOL": "Ou bora um lol ae na moralzinha",
     "URLs": {
         "INSPIRO": "https://inspirobot.me/api?generate=true"
-    }
+    },
+    "DEFAULT_ANNOUNCE_CHANNEL": 732092406283108394,
+    "TWITCH_CLIENT_ID": "kw44uuwoo8pv1bgo2mjg5mrkpg0fw8",
+    "TWITCH_USER_ID": 549074777 
 }

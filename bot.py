@@ -21,7 +21,8 @@ class PotatoBot(commands.Bot):
                 'cogs.Config',
                 'cogs.GoldHandler',
 #                'cogs.Twitter',
-                'cogs.Welcome'
+                'cogs.Welcome',
+                'cogs.Twitch'
         ]
 
         self.start_time = datetime.utcnow()
