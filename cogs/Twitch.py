@@ -13,13 +13,13 @@ class Twitch(commands.Cog):
         self.bot = bot
         self.check_stream.start()
         self.last_time = datetime.now()
-        self.first_time = True
+        self.stopped = True
 
     async def fetch(self, session, url, headers):
         async with session.get(url, headers=headers) as response:
             return await response.json()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes=3)
     async def check_stream(self):
         token = os.environ.get('TWITCH_TOKEN')
 
@@ -45,7 +45,7 @@ class Twitch(commands.Cog):
 
             last_stream = (datetime.now() - self.last_time).total_seconds() / 3600.0
 
-            if len(twitch_response['data']) > 0 and (last_stream > 3.0 or self.first_time):
+            if len(twitch_response['data']) > 0 and (last_stream > 3.0 or self.stopped):
                 title = twitch_response['data'][0]['title']
                 thumbnail = twitch_response['data'][0]['thumbnail_url']
                 username = twitch_response['data'][0]['user_name']
@@ -67,7 +67,9 @@ class Twitch(commands.Cog):
                 await channel.send(embed=embed)
 
                 self.last_time = datetime.now()
-                self.first_time = False
+                self.stopped = False
+            else:
+                self.stopped = True
 
     @check_stream.before_loop
     async def before_checker(self):
