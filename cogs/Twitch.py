@@ -68,7 +68,7 @@ class Twitch(commands.Cog):
 
                 self.last_time = datetime.now()
                 self.stopped = False
-            else:
+            elif len(twitch_response['data']) == 0:
                 self.stopped = True
 
     @check_stream.before_loop
