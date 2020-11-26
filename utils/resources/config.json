@@ -1,6 +1,7 @@
 {
     "COMMANDS_PREFIX": ">",
     "COMMANDS_SUCCESS": "\u2705",
+    "DEFAULT_ANNOUNCE_CHANNEL": 732092406283108394,
     "DEFAULT_CLEAR": 10,
     "DEFAULT_GOLD_CHANNEL": 702263858613715074,
     "DEFAULT_GOLD_EMOJI": "\u2b50",
@@ -23,10 +24,9 @@
     ],
     "MAX_BORALOL": 5,
     "MSG_BORALOL": "Ou bora um lol ae na moralzinha",
+    "TWITCH_CLIENT_ID": "kw44uuwoo8pv1bgo2mjg5mrkpg0fw8",
+    "TWITCH_USER_ID": 549074777,
     "URLs": {
         "INSPIRO": "https://inspirobot.me/api?generate=true"
-    },
-    "DEFAULT_ANNOUNCE_CHANNEL": 732092406283108394,
-    "TWITCH_CLIENT_ID": "kw44uuwoo8pv1bgo2mjg5mrkpg0fw8",
-    "TWITCH_USER_ID": 549074777 
+    }
 }

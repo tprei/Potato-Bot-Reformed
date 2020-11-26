@@ -29,11 +29,10 @@ class GoldHandler(commands.Cog):
 
         sent_message = await send_gold_message(reaction, self.gold_channel, embed, files)
 
-        self.bot.gold_ids[message.id] = sent_message.id
+        return sent_message
 
-    async def update_gold(self, reaction):
+    async def update_gold(self, reaction, embed_id):
         message = reaction.message
-        embed_id = self.bot.gold_ids[message.id]
         emb_message = await self.gold_channel.fetch_message(embed_id)
         await edit_gold_message(emb_message, reaction)
 
@@ -43,12 +42,15 @@ class GoldHandler(commands.Cog):
        
         if self.gold_channel == None:
             self.gold_channel = await self.fetch_gold_channel()
+        
+        embed_id = await self.bot.gold_db.lookup(message.id)
 
         # if gold message already exists
-        if message.id in self.bot.gold_ids:
-            await self.update_gold(reaction)
+        if embed_id is not None:
+            await self.update_gold(reaction, embed_id)
         else:
-            await self.create_gold(reaction)
+            new_message = await self.create_gold(reaction)
+            await self.bot.gold_db.insert(message.id, new_message.id)
 
 def setup(bot):
     bot.add_cog(GoldHandler(bot))

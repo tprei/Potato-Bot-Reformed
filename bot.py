@@ -6,6 +6,8 @@ import asyncio
 import logging
 import os, sys
 
+from tools.GoldDatabaseHandler import GoldDatabaseHandler
+
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
 class PotatoBot(commands.Bot):
@@ -29,7 +31,7 @@ class PotatoBot(commands.Bot):
         self.cache = set()
 
         self.gold_channel = 0
-        self.gold_ids = {}
+        self.gold_db = GoldDatabaseHandler("utils/resources/database.db")
 
         self.startup()
 
