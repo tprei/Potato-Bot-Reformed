@@ -24,11 +24,12 @@ class PotatoBot(commands.Bot):
                 'cogs.GoldHandler',
 #               'cogs.Twitter',
                 'cogs.Welcome',
-#               'cogs.Twitch'
+#               'cogs.Twitch',
+                'cogs.Party'
         ]
 
         self.start_time = datetime.utcnow()
-        self.cache = set()
+        self.cache, self.active_parties = set(), dict()
 
         self.gold_channel = 0
         self.gold_db = GoldDatabaseHandler("utils/resources/database.db")
