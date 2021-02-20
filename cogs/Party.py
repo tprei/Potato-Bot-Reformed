@@ -13,6 +13,7 @@ class Party(commands.Cog):
         self.bot = bot
         self.party_cleanup.start()
         self.party_join_emoji = cfg['COMMANDS_SUCCESS']
+        self.party_close_emoji = cfg['COMMANDS_FAILURE']
 
     @staticmethod
     def create_party(msg, game, party_size, ttl):
@@ -25,6 +26,15 @@ class Party(commands.Cog):
             "created_at": datetime.now(),
             "ttl": ttl
         }
+
+    async def close_party(self, party, msg):
+        # send party summary
+        closed_party = PartyEmbed(party, description='**A party fechou!**')
+        joined = party['joined']
+
+        del party  # remove party object from dict
+        await msg.edit(embed=closed_party)  # remove party message
+        await msg.reply(content=" ".join([j.mention for j in joined.keys()]))
 
     @tasks.loop(minutes=1)
     async def party_cleanup(self):
@@ -76,31 +86,29 @@ class Party(commands.Cog):
 
         if user == self.bot.user:  # check if its not bot
             return
+        if msg_id not in self.bot.active_parties: # if message is not a party proposal
+            return
+
+        party = self.bot.active_parties[msg_id]
+        joined = party['joined']
 
         if emoji == self.party_join_emoji:
-            # if message is not a party proposal
-            if msg_id not in self.bot.active_parties:
+            if user == party['owner']:  # if user is the party owner
                 return
 
-            party = self.bot.active_parties[msg_id]
-            joined = party['joined']
-
-            if user == party['owner']:
-                return
-            else:
-                joined[user] = None
+            joined[user] = None
 
             # check if party is complete
             if len(joined) == party['party_size']:
-                # send party summary
-                closed_party = PartyEmbed(party, description='**A party fechou!**')
-
-                del party  # remove party object from dict
-                await msg.edit(embed=closed_party)  # remove party message
-                await msg.reply(content=" ".join([j.mention for j in joined.keys()]))
+                await self.close_party(party, msg)
             else:
                 embed = PartyEmbed(party)
                 await msg.edit(embed=embed)
+        elif emoji == self.party_close_emoji:
+            if user != party['owner']:  # if user is NOT the party owner
+                return
+
+            await self.close_party(party, msg)
 
     @commands.command()
     async def party(self, ctx, game: str, party_size=5, ttl=60):
@@ -109,7 +117,10 @@ class Party(commands.Cog):
         embed = PartyEmbed(party_obj)
 
         embed_msg = await ctx.send(embed=embed)
+
         await embed_msg.add_reaction(cfg['COMMANDS_SUCCESS'])
+        await embed_msg.add_reaction(cfg['COMMANDS_FAILURE'])
+
         self.bot.active_parties[embed_msg.id] = party_obj
 
 
