@@ -39,6 +39,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_command_completion(self, ctx):
         await ctx.message.add_reaction(cfg['COMMANDS_SUCCESS'])
+        await ctx.message.delete(delay=30)
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
