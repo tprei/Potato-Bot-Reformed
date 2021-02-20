@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timedelta
 from discord.ext import commands, tasks
 from discord import NotFound
@@ -16,7 +17,7 @@ class Party(commands.Cog):
     @staticmethod
     def create_party(msg, game, party_size, ttl):
         return {
-            "joined": [msg.author],
+            "joined": {msg.author: None},
             "party_size": party_size,
             "game": game,
             "channel": msg.channel,
@@ -49,19 +50,21 @@ class Party(commands.Cog):
         await self.bot.wait_until_ready()
 
     @commands.Cog.listener()
-    async def on_reaction_remove(self, reaction, user):
-        msg = reaction.message
-        msg_id = msg.id
-        emoji = reaction.emoji
+    async def on_raw_reaction_remove(self, payload):
+        msg_id = payload.message_id
+        emoji = payload.emoji
+        user = await self.bot.fetch_user(payload.user_id)
 
-        if emoji == self.party_join_emoji:
+        if str(emoji) == str(self.party_join_emoji):
             # if message is not a party proposal
             if msg_id not in self.bot.active_parties:
                 return
 
             party = self.bot.active_parties[msg_id]
+            msg = await party['channel'].fetch_message(msg_id)
+
             if user in party['joined'] and user != party['owner']:
-                party['joined'].remove(user)
+                del party['joined'][user]
                 embed = PartyEmbed(party)
                 await msg.edit(embed=embed)
 
@@ -85,7 +88,7 @@ class Party(commands.Cog):
             if user == party['owner']:
                 return
             else:
-                joined.append(user)
+                joined[user] = None
 
             # check if party is complete
             if len(joined) == party['party_size']:
@@ -94,7 +97,7 @@ class Party(commands.Cog):
 
                 del party  # remove party object from dict
                 await msg.edit(embed=closed_party)  # remove party message
-                await msg.reply(content=" ".join([j.mention for j in joined]))
+                await msg.reply(content=" ".join([j.mention for j in joined.keys()]))
             else:
                 embed = PartyEmbed(party)
                 await msg.edit(embed=embed)
