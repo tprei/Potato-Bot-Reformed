@@ -5,7 +5,7 @@ class EmptyFileError(Exception):
     pass
 
 def load(file_name):
-    with open(file_name) as json_data:
+    with open(file_name, encoding="UTF-8") as json_data:
         GLOBAL = json.load(json_data) 
 
     return GLOBAL
