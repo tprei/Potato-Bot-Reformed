@@ -71,7 +71,8 @@ class Party(commands.Cog):
                 return
 
             party = self.bot.active_parties[msg_id]
-            msg = await party['channel'].fetch_message(msg_id)
+            channel = self.bot.get_channel(cfg['DEFAULT_PARTY_CHANNEL'])
+            msg = await channel.fetch_message(msg_id)
 
             if user in party['joined'] and user != party['owner']:
                 del party['joined'][user]
@@ -111,12 +112,14 @@ class Party(commands.Cog):
             await self.close_party(party, msg)
 
     @commands.command()
-    async def party(self, ctx, game: str, party_size=5, ttl=60):
+    async def party(self, ctx, game: str, party_size=5, ttl=300):
         msg = ctx.message
         party_obj = self.create_party(msg, game, party_size, ttl)
         embed = PartyEmbed(party_obj)
 
-        embed_msg = await ctx.send(embed=embed)
+        channel_id = cfg['DEFAULT_PARTY_CHANNEL']
+        channel = self.bot.get_channel(channel_id)
+        embed_msg = await channel.send(embed=embed)
 
         await embed_msg.add_reaction(cfg['COMMANDS_SUCCESS'])
         await embed_msg.add_reaction(cfg['COMMANDS_FAILURE'])

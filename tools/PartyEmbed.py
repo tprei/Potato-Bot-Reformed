@@ -2,10 +2,10 @@ from discord import Embed, Colour
 
 
 class PartyEmbed(Embed):
-    def __init__(self, party, description='Reaja com :white_check_mark: para entrar na party\n'):
+    def __init__(self, party, description='**Opções:**\n\n:white_check_mark: : Entrar na party\n:x: : Fechar a party (apenas o dono tem essa permissão)\n'):
         super().__init__()
 
-        self.title = party['game']
+        self.title = ":loudspeaker: " + party['game']
         user = party['owner']
 
         self = self.set_author(
@@ -19,6 +19,6 @@ class PartyEmbed(Embed):
         self.description = description
 
         if len(party['joined']) > 0:
-            self.description += f'\nBatatinhas confirmadas:'
+            self.description += f'\n**Batatinhas confirmadas:**\n'
             for i, u in enumerate(party['joined']):
                 self = self.add_field(name=f'[{i + 1}]', value=u.mention)
