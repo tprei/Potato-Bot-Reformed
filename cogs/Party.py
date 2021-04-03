@@ -87,7 +87,7 @@ class Party(commands.Cog):
 
         if user == self.bot.user:  # check if its not bot
             return
-        if msg_id not in self.bot.active_parties: # if message is not a party proposal
+        if msg_id not in self.bot.active_parties:  # if message is not a party proposal
             return
 
         party = self.bot.active_parties[msg_id]

@@ -1,4 +1,4 @@
-#!/home/preischadt/clones/Potato-Bot-Reformed/bot-env/bin/python
+#!/home/preixa/Potato-Bot-Reformed/bot-env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

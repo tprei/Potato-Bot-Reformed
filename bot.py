@@ -4,28 +4,32 @@ from tools.logger import initialize_logging
 from utils.config import GLOBAL as cfg
 import asyncio
 import logging
-import os, sys
+import os
+import sys
 
 from tools.GoldDatabaseHandler import GoldDatabaseHandler
 
 TOKEN = os.environ.get('DISCORD_TOKEN')
 
+
 class PotatoBot(commands.Bot):
     def __init__(self):
-        super().__init__(command_prefix=cfg['COMMANDS_PREFIX'], case_insensitive=True)
+        super().__init__(
+            command_prefix=cfg['COMMANDS_PREFIX'], case_insensitive=True)
 
         # See ~/cogs/ for more info
         self.loaded_cogs = [
-                'cogs.Events',
-                'cogs.Fun',
-                'cogs.Admin',
-                'cogs.Gold',
-                'cogs.Config',
-                'cogs.GoldHandler',
-#               'cogs.Twitter',
-                'cogs.Welcome',
-#               'cogs.Twitch',
-                'cogs.Party'
+            'cogs.Events',
+            'cogs.Fun',
+            'cogs.Admin',
+            'cogs.Gold',
+            'cogs.Config',
+            'cogs.GoldHandler',
+            #               'cogs.Twitter',
+            'cogs.Welcome',
+            #               'cogs.Twitch',
+            'cogs.Party',
+            'cogs.Clash'
         ]
 
         self.start_time = datetime.utcnow()
@@ -40,6 +44,8 @@ class PotatoBot(commands.Bot):
         for cog in self.loaded_cogs:
             print(f'Loaded extension {cog}')
             self.load_extension(cog)
+
+
 def main():
     bot = PotatoBot()
 
@@ -54,6 +60,6 @@ def main():
         print('To run this bot you must set environment variable DISCORD_TOKEN to your Bot\'s token.')
         print(e)
 
+
 if __name__ == '__main__':
     main()
-
