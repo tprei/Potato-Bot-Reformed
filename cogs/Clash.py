@@ -66,7 +66,7 @@ class Clash(commands.Cog):
 
         sheet = await agc.open_by_key('1swBglL31meAvF4WSSrEbnBoWzlo8QnBjbLKcKMl3XX4')
         worksheet = await sheet.worksheet(f'Game {game_id}')
-        cells = await worksheet.range('C15:G15')
+        cells = await worksheet.range('C15:I15')
 
         updates = []
         for i, cell in enumerate(cells):
