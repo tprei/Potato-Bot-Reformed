@@ -21,10 +21,10 @@ def opgg(name):
 
 def cell_values(names, clear=False):
     if clear:
-        return ["" for i in range(5)]
+        return ["" for i in range(len(names))]
     else:
         formulas = [None if names[i] is None else "=HYPERLINK(\"{}\", \"{}\")".format(
-            opgg(names[i]), names[i]) for i in range(5)]
+            opgg(names[i]), names[i]) for i in range(len(names))]
         return formulas
 
 
